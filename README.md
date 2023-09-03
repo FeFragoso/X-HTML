@@ -9,6 +9,7 @@ Se trata de um construtor de inputs usando javascript puro. Nele você poderá p
 | x-class       | ❌           |              |
 | x-placeholder | ❌           |              |
 
+
 ## CONTEXTOS
 - dinheiro
 - horario
