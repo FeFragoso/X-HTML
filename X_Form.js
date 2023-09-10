@@ -1,17 +1,18 @@
 class X_Form extends HTMLElement {
 
   static get observedAttributes() {
-    return ['x-inputs', 'x-url', 'x-id', 'x-class', 'x-text'];  // A lista de atributos que queremos observar
+    return ['x-inputs', 'x-url', 'x-retorno', 'x-id', 'x-class', 'x-text'];  // A lista de atributos que queremos observar
   }
 
   constructor() {
     super(); // É sempre necessário chamar o super() primeiro em elementos customizados
 
-    this._Xinputs = this.getAttribute('x-inputs') || '';
-    this._Xurl    = this.getAttribute('x-url')    || '';
-    this._Xid     = this.getAttribute('x-id')     || '';
-    this._Xclass  = this.getAttribute('x-class')  || '';
-    this._Xtext   = this.getAttribute('x-text')   || '';
+    this._Xinputs  = this.getAttribute('x-inputs')  || '';
+    this._Xurl     = this.getAttribute('x-url')     || '';
+    this._Xretorno = this.getAttribute('x-retorno') || '';
+    this._Xid      = this.getAttribute('x-id')      || '';
+    this._Xclass   = this.getAttribute('x-class')   || '';
+    this._Xtext    = this.getAttribute('x-text')    || '';
   }
 
   connectedCallback() {
@@ -22,17 +23,18 @@ class X_Form extends HTMLElement {
 
   attributeChangedCallback(name, oldValue, newValue) {
     switch (name) {
-      case 'x-inputs': this._Xinputs = newValue; break;
-      case 'x-url':    this._Xurl    = newValue; break;
-      case 'x-id':     this._Xid     = newValue; break;
-      case 'x-class':  this._Xclass  = newValue; break;
-      case 'x-text':   this._Xtext   = newValue; break;
+      case 'x-inputs':  this._Xinputs  = newValue; break;
+      case 'x-url':     this._Xurl     = newValue; break;
+      case 'x-retorno': this._Xretorno = newValue; break;
+      case 'x-id':      this._Xid      = newValue; break;
+      case 'x-class':   this._Xclass   = newValue; break;
+      case 'x-text':    this._Xtext    = newValue; break;
     }
 
     this.render(); // Re-renderiza sempre que qualquer atributo muda
   }
 
-  submit() {
+  submit(e) {
 
     let inputs = this._Xinputs.split(' ');
 
@@ -53,24 +55,30 @@ class X_Form extends HTMLElement {
 
     var AJAX = new XMLHttpRequest();
 
+    let retorno = '';
+
     AJAX.onreadystatechange = function () {
       if (AJAX.readyState === 4) {
         if (AJAX.status === 200) {
           // RETORNO QUANDO DER CERTO
-          //document.getElementById("xxxxxxxxxxxxxxxxxx").innerHTML = AJAX.responseText;
+          retorno = 'AJAX.responseText';
         } else {
           // RETORNO QUANDO DER ERRADO
-          //document.getElementById("xxxxxxxxxxxxxxxxxx").innerHTML = "Erro na requisição.";
+          retorno = `Erro na requisição ${this._Xid}`;
         }
       }
     };
+
+    // RETORNO
+    this.setAttribute('x-retorno', retorno);
 
     AJAX.open("POST", this._Xurl, true);
     
     AJAX.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
 
     AJAX.send(JSON.stringify(data));
-    console.log(JSON.stringify(data))
+    
+    console.log(JSON.stringify(data), retorno);
   }
 
   render() {
