@@ -1,4 +1,4 @@
-class X_Form extends HTMLElement {
+export default class X_Form extends HTMLElement {
 
   static get observedAttributes() {
     return ['x-inputs', 'x-url', 'x-retorno', 'x-id', 'x-class', 'x-text'];  // A lista de atributos que queremos observar

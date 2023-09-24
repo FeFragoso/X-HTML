@@ -1,4 +1,9 @@
-class X_Input extends HTMLElement {
+// Importação dos Contextos
+import { contextoDinheiro } from './contextos/dinheiro.js'
+import { contextoHorario }  from './contextos/horario.js'
+
+
+export default class X_Input extends HTMLElement {
 
   static get observedAttributes() {
     return ['contexto', 'x-name', 'x-id', 'x-class', 'x-placeholder'];  // A lista de atributos que queremos observar
@@ -62,53 +67,5 @@ class X_Input extends HTMLElement {
   }
 
 }
-
-function contextoDinheiro(input, Xid) {
-  // Input Hidden
-  let outputHidden = input.replace('R$ ', '').replace(',', '').replace('.', '');
-  outputHidden = parseFloat(outputHidden) / 100;
-  document.querySelector('#' + Xid + '-hidden').value = outputHidden;
-
-  if (document.querySelector('#' + Xid + '-hidden').value == 'NaN') {
-    document.querySelector('#' + Xid + '-hidden').value = 0;
-  }
-
-  // Input Front
-  let output = input.replace(/\D/g, ''); // Exclui tudo que não for número
-  output = (parseInt(output) / 100).toFixed(2);
-  output = `R$ ${output.replace('.', ',').replace(/\B(?=(\d{3})+(?!\d))/g, ".")}`;
-
-  return output;
-}
-
-function contextoHorario(input, Xid) {
-    // Input Hidden
-    document.querySelector('#' + Xid + '-hidden').value = input;
-    
-    // Input Front
-    let output = input.replace(/[^0-9:]/g, ''); // Exclui tudo que não for número
-    
-    let x = '';
-
-    // AB:CD
-
-    // A
-    if (output.length > 0) { x += output[0]; }
-
-    // B
-    if (output.length > 1) { x += output[1] + ':'; }
-
-    // c
-    if (output.length > 2) {
-      if (output[3] <= 5) { x += output[3]; }
-    }
-
-    // D
-    if (output.length > 4) { x += output[4]; }
-
-    output = x;
-    
-    return output;
-  }
 
 customElements.define('x-input', X_Input);
