@@ -1,6 +1,7 @@
 // Importação dos Contextos
 import { contextoDinheiro } from './contextos/dinheiro.js'
 import { contextoHorario }  from './contextos/horario.js'
+import { contextoTelefone } from './contextos/telefone.js'
 
 
 export default class X_Input extends HTMLElement {
@@ -44,6 +45,9 @@ export default class X_Input extends HTMLElement {
         break;
       case 'horario':
         inputElement.value = contextoHorario(inputElement.value, this._Xid);
+        break;
+      case 'telefone':
+        inputElement.value = contextoTelefone(inputElement.value, this._Xid);
         break;
     }
   }

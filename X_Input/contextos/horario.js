@@ -1,4 +1,13 @@
 export function contextoHorario(input, Xid) {
+
+  // Tratativas ao deletar valores
+  document.querySelector('#' + Xid).addEventListener('keydown', (event) => {
+    if (event.keyCode === 8 || event.keyCode === 46) {
+      document.querySelector('#' + Xid).value = null;
+      document.querySelector('#' + Xid + '-hidden').value = null;
+    }
+  })
+  
   // Input Hidden
   document.querySelector('#' + Xid + '-hidden').value = input;
   
