@@ -1,4 +1,6 @@
 // Importação dos Contextos
+import { contextoTexto }    from './contextos/texto.js'
+import { contextoInteiro }  from './contextos/inteiro.js'
 import { contextoDinheiro } from './contextos/dinheiro.js'
 import { contextoHorario }  from './contextos/horario.js'
 import { contextoTelefone } from './contextos/telefone.js'
@@ -40,6 +42,12 @@ export default class X_Input extends HTMLElement {
 
   contexto(inputElement) {
     switch (this._contexto) {
+      case 'texto':
+        inputElement.value = contextoTexto(inputElement.value, this._Xid);
+        break;
+      case 'inteiro':
+        inputElement.value = contextoInteiro(inputElement.value, this._Xid);
+        break;
       case 'dinheiro':
         inputElement.value = contextoDinheiro(inputElement.value, this._Xid);
         break;
